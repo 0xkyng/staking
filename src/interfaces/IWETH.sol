@@ -1,6 +1,6 @@
 pragma solidity ^0.8.10;
 
-interface WETH9 {
+interface IWETH {
     event Approval(address indexed src, address indexed guy, uint256 wad);
     event Deposit(address indexed dst, uint256 wad);
     event Transfer(address indexed src, address indexed dst, uint256 wad);

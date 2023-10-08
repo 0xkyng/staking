@@ -30,7 +30,7 @@ contract Oxkyng is ERC20 {
     }
 
     mapping(address => User) public users;
-     address[] public usersCompounding;
+    address[] public usersCompounding;
     address[] public usersNotCompounding;
 
 
@@ -148,22 +148,17 @@ contract Oxkyng is ERC20 {
                 continue;
             }
             uint256 stakingReward = calcRewards(_user);
+
             uint rewards = users[_user].stakingReward = 0;
 
-            uint256 prevBal = IERC20(Weth).balanceOf(address(this));
+            uint diff = stakingReward + users[_user].stakedAmount;
 
-            swapOxkToWeth(stakingRewards);
-
-            uint256 balAfter = IERC20(Weth).balanceOf(address(this));
-
-            uint256 diff = balAfter - prevBal;
             _mint(_user, diff);
 
-            uint lastStake = users[_user].lastTimeStaked;
+            swapOxkToWeth(stakingRewards);
+            
 
-            bool comp = users[_user].usersCompounding;
-
-            User memory _user = User(
+            User memory _user = users(
                 diff,
                 block.timestamp,
                 lastStake,
